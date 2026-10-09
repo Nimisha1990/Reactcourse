@@ -7,7 +7,7 @@ import Navbar from './components/Navbar'
 import Textform from './components/Textform'
 //import About from './components/About'
 import Alert from './components/Alert'
-<Router basename="/Reactcourse"/>
+
 /*import {
   BrowserRouter as Router,
   Routes,
@@ -47,7 +47,8 @@ setTimeout(() => {
     }
   }
   return (
-   // <Router>
+     
+   
     <>
      
    
@@ -67,7 +68,7 @@ setTimeout(() => {
       </div>
       
     </>
-   // </Router>
+  
   )
 }
 export default App
