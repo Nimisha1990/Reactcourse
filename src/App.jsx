@@ -7,6 +7,7 @@ import Navbar from './components/Navbar'
 import Textform from './components/Textform'
 //import About from './components/About'
 import Alert from './components/Alert'
+<Router basename="/Reactcourse"></Router>
 /*import {
   BrowserRouter as Router,
   Routes,
