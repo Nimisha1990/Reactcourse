@@ -1,11 +1,18 @@
 import React, { useState } from 'react'
 
-export default function About() {
+export default function About(props) {
     
-    const [myStyle, setMyStyle] = useState({
-        color: 'black',
-        backgroundColor: 'white'
-    })
+   // const [myStyle, setMyStyle] = useState({
+     //   color: 'black',
+       // backgroundColor: 'white'
+  //  })
+      let myStyle = { 
+        color: props.mode === 'dark' ? 'white' : '#042743',
+        backgroundColor:  props.mode === 'dark' ? 'rgb(36 74 104)' : 'white',
+        border: '2px solid',
+        borderColor:  props.mode === 'dark' ? 'white' : '#042743'
+    }
+      
 
     const [btnText, setBtnText] = useState("Enable Dark Mode")
     const toggleStyle = ()=>{
@@ -28,11 +35,11 @@ export default function About() {
        
     <div className="container" style={myStyle}>
       <div className="accordion" id="accordionExample">
-         <h1 className="text-center" style={myStyle}>About Us</h1>
+         <h1 className="text-center" style={{color: props.mode === 'dark' ? 'white' : '#042743'}}>About Us</h1>
   <div className="accordion-item">
     <h2 className="accordion-header">
       <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style={myStyle}>
-        Accordion Item #1
+what is TextUtils?
       </button>
     </h2>
     <div id="collapseOne" className="accordion-collapse collapse show" style={myStyle} data-bs-parent="#accordionExample">
@@ -44,7 +51,7 @@ export default function About() {
   <div className="accordion-item">
     <h2 className="accordion-header">
       <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" style={myStyle}>
-        Accordion Item #2
+        How does TextUtils work?
       </button>
     </h2>
     <div id="collapseTwo" className="accordion-collapse collapse" data-bs-parent="#accordionExample">
@@ -56,7 +63,7 @@ export default function About() {
   <div className="accordion-item">
     <h2 className="accordion-header">
       <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" style={myStyle}>
-        Accordion Item #3
+Is it compatible with my App React?
       </button>
     </h2>
     <div id="collapseThree" className="accordion-collapse collapse" data-bs-parent="#accordionExample">
@@ -68,9 +75,9 @@ export default function About() {
 </div>
 <div className="container my-3">
 
-    <button type="button" className="btn btn-primary" onClick={toggleStyle}>
+   {/* <button type="button" className="btn btn-primary" onClick={toggleStyle}>
       {btnText}
-    </button>
+    </button> */} 
 
 </div>
     </div>

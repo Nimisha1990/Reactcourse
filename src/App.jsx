@@ -1,76 +1,80 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
+import { useState, useEffect } from 'react'
 import './App.css'
 import Navbar from './components/Navbar'
 import Textform from './components/Textform'
-//import About from './components/About'
+import About from './components/About'
 import Alert from './components/Alert'
 
-/*import {
+import {
   BrowserRouter as Router,
   Routes,
   Route
-} from "react-router-dom";*/
+} from "react-router-dom";
 
 function App() {
-   const[alert, setAlert] = useState(null);
-  const showAlert = (message, type)=> {
+  const [alert, setAlert] = useState(null);
+  const [mode, setMode] = useState('light');   // dark or light
+  const [color, setColor] = useState(null);    // palette color, e.g. 'primary'
+
+  const showAlert = (message, type) => {
     setAlert({
       msg: message,
       type: type
-    })    
-setTimeout(() => {
-  setAlert(null);
-}, 1500);
-  }
-  const [mode, setMode] = useState('light'); // whether dark mode is enabled or light mode is enabled
-  function toggleMode() {
+    });
+    setTimeout(() => {
+      setAlert(null);
+    }, 1500);
+  };
+
+  // Dark mode switch: only changes the mode
+  const toggleMode = () => {
     if (mode === 'light') {
-      setMode('dark')
-      showAlert("Dark mode has been enabled", "success")
-      document.body.style.backgroundColor = '#042743'
-      document.title = 'TextUtils - Dark Mode'
-      /* setInterval(() => {
-         document.title = 'TextUtils is amazing';
-       }, 2000);
-       setInterval(() => {
-         document.title = 'Install TextUtils now';
-       }, 1500);   */
+      setMode('dark');
+      showAlert("Dark mode has been enabled", "success");
+      document.title = 'TextUtils - Dark Mode';
+    } else {
+      setMode('light');
+      showAlert("Light mode has been enabled", "success");
+      document.title = 'TextUtils';
     }
-    else {
-      setMode('light')
-      showAlert("Light mode has been enabled", "success")
-      document.body.style.backgroundColor = 'white'
-      document.title = 'TextUtils - Light Mode'
+  };
+
+  // Palette: only changes the color (click the same color again to clear it)
+  const changeColor = (cls) => {
+    setColor(color === cls ? null : cls);
+  };
+
+  // Applies the background whenever mode or color changes
+  useEffect(() => {
+    document.body.classList.remove('bg-primary', 'bg-danger', 'bg-success', 'bg-warning'); {/* remove all palette classes */}
+    if (color) {
+      document.body.classList.add('bg-' + color);
+    } else {
+      document.body.style.backgroundColor = mode === 'dark' ? '#042743' : 'white';
     }
-  }
+  }, [mode, color]);
+
   return (
-     
-   
-    <>
-     
-   
-      <Navbar title="TextUtils" aboutText="About TextUtils" mode={mode} toggleMode={toggleMode} />
-<Alert alert={alert}> </Alert>   
+    <Router basename={import.meta.env.BASE_URL}> {/* basename is used to set the base URL for the router, useful for deployment on GitHub Pages */ }
+      <Navbar
+        title="TextUtils"
+        aboutText="About TextUtils"
+        mode={mode}
+        toggleMode={toggleMode}
+        changeColor={changeColor}
+      />
+      <Alert alert={alert} />
       <div className="container my-3">
-        {/*<Routes>
-          {/* exact means you have to access the only link you required*/}
-          {/*<Route exact path="/about" element={<About />} />
+        <Routes>
+          <Route path="/about" element={<About />} />
           <Route
             path="/"
-            element={<Textform showAlert={showAlert} heading="Enter the text to analyze below" mode={mode} />}
+            element={<Textform showAlert={showAlert} heading="Try TextUtils - WordCount, Character, Remove Text, Count Syllables" mode={mode} />}
           />
-        </Routes>*/}
-        <Textform showAlert ={showAlert} heading="Enter the text to analyze below" mode={mode} /> 
-        {/*<About />*/}
+        </Routes>
       </div>
-      
-    </>
-  
-  )
+    </Router>
+  );
 }
-export default App
 
-  
+export default App;
